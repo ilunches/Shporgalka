@@ -1,0 +1,80 @@
+CREATE DATABASE ЭкзаменЛогинова
+GO
+
+USE ЭкзаменЛогинова
+GO
+
+--роль1
+CREATE TABLE Роль (
+	Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	Название NVARCHAR(MAX) NOT NULL
+);
+
+GO
+
+-- пользователь / авторизация
+CREATE TABLE Пользователь (
+	Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	КодРоли INT NOT NULL,
+	Логин NVARCHAR(MAX) NOT NULL,
+	Пароль NVARCHAR(MAX) NOT NULL,
+	ФИО NVARCHAR(MAX) NOT NULL,
+	CONSTRAINT FK_Пользователь_Роль
+	FOREIGN KEY (КодРоли) REFERENCES Роль(Код)
+);
+
+GO
+
+-- вид оборудования
+CREATE TABLE ВидОборудования (
+	Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	Название NVARCHAR(MAX) NOT NULL,
+);
+GO
+
+-- Тип Неисправности
+CREATE TABLE ТипНеисправности (
+	Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	Название NVARCHAR(MAX) NOT NULL,
+);
+GO
+
+-- модель
+CREATE TABLE Модель (
+	Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	Название NVARCHAR(MAX) NOT NULL,
+);
+GO
+
+-- телефон клиента
+CREATE TABLE ТелефонКлиента (
+    Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+    Номер NVARCHAR(MAX) NOT NULL
+);
+GO
+
+-- заявка / номер - это код
+CREATE TABLE Заявка (
+    Код INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+    КодПользователя INT NOT NULL,
+    КодВидаОборудования INT NOT NULL,
+    КодТипаНеисправности INT NOT NULL,
+    КодМодели INT NOT NULL,
+    КодТелефонаКлиента INT NOT NULL,
+    ОписаниеПроблемы NVARCHAR(MAX) NOT NULL,
+    ДатаСоздания NVARCHAR(MAX) NOT NULL,
+    ДатаЗавершения NVARCHAR(MAX) NOT NULL,
+    CONSTRAINT FK_Заявка_Пользователь
+    FOREIGN KEY (КодПользователя) REFERENCES Пользователь(Код),
+    CONSTRAINT FK_Заявка_ВидОборудования
+    FOREIGN KEY (КодВидаОборудования) REFERENCES ВидОборудования(Код),
+    CONSTRAINT FK_Заявка_ТипНеисправности
+    FOREIGN KEY (КодТипаНеисправности) REFERENCES ТипНеисправности(Код),
+    CONSTRAINT FK_Заявка_Модель
+    FOREIGN KEY (КодМодели) REFERENCES Модель(Код),
+    CONSTRAINT FK_Заявка_ТелефонКлиента
+    FOREIGN KEY (КодТелефонаКлиента) REFERENCES ТелефонКлиента(Код)
+);
+GO
+
+
