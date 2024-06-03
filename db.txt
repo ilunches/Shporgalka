@@ -45,7 +45,7 @@ AppConnect.modelOdb = new ЭкзаменЛогинова222Entities();
 <Grid>
   <Frame x:Name="FrmMain" NavigationUIVisibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 </Grid>
-8. Создаем теперь класс AppFrame и в нем пишем:
+8. Создаем  в папку ApplicationData теперь класс AppFrame и в нем пишем:
 class AppFrame
 {
   public static Frame frameMain;
